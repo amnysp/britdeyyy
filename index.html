@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, siape si ini 💙</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#eaf6ff;
+    --sky-deep:#cfeaff;
+    --cloud:#ffffff;
+    --blue:#8ecbff;
+    --blue-deep:#5ba8e0;
+    --pink:#ffd6e5;
+    --pink-deep:#ff9ec2;
+    --cream:#fffdf7;
+    --line:#5b7da3;
+    --text:#5b7da3;
+    --text-deep:#3f6892;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Quicksand',sans-serif;
+    background-color: #eef8ff;
+    color:var(--text);
+    overflow-x:hidden;
+    min-height:100vh;
+    position:relative;
+    -webkit-text-size-adjust:100%;
+    touch-action:manipulation;
+  }
+  /* background image */
+  .bg-image{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+  }
+  .bg-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* Floating doodle deco */
+  .bg-deco{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:1;overflow:hidden;
+  }
+  .deco-item{
+    position:absolute;
+    bottom:-60px;
+    opacity:0.5;
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0;}
+    10%{opacity:0.5;}
+    90%{opacity:0.5;}
+    100%{transform:translateY(-115vh) translateX(24px) rotate(10deg);opacity:0;}
+  }
+
+  /* ===== GIFT SCREEN ===== */
+  .gift-screen{
+    position:fixed;inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    background: transparent;
+    transition:opacity 0.9s ease, visibility 0.9s ease;
+    text-align:center;
+    padding:24px;
+  }
+  .gift-screen.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .gift-screen h2{
+    font-family:'Caveat',cursive;
+    font-size:34px;
+    font-weight:700;
+    color:var(--text-deep);
+    margin-bottom:8px;
+  }
+  .gift-screen p{
+    font-size:14px;
+    color:var(--text);
+    margin-bottom:30px;
+    max-width:320px;
+  }
+
+  .gift-box{
+    position:relative;
+    width:180px;height:180px;
+    cursor:pointer;
+    animation:bob 2.6s ease-in-out infinite;
+    user-select:none;
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-12px) rotate(2deg);}
+  }
+  .gift-box svg{ width:100%; height:100%; display:block; }
+
+  .gift-box.shaking{
+    animation:shake 0.5s ease-in-out;
+  }
+  @keyframes shake{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    10%{transform:translate(-6px,0) rotate(-8deg);}
+    20%{transform:translate(6px,0) rotate(8deg);}
+    30%{transform:translate(-8px,-2px) rotate(-10deg);}
+    40%{transform:translate(8px,-2px) rotate(10deg);}
+    50%{transform:translate(-6px,0) rotate(-8deg);}
+    60%{transform:translate(6px,0) rotate(8deg);}
+    70%{transform:translate(-4px,-4px) rotate(-6deg);}
+    80%{transform:translate(4px,-4px) rotate(6deg);}
+    90%{transform:translate(-2px,0) rotate(-3deg);}
+  }
+
+  .gift-box.opening{ animation:none; }
+  .gift-box.opening .lid-group{
+    transition:transform 0.55s cubic-bezier(.34,1.76,.64,1), opacity 0.45s ease;
+    transform:translate(60px,-110px) rotate(160deg);
+    opacity:0;
+  }
+  .gift-box.opening .box-group{
+    transition:transform 0.5s ease 0.05s, opacity 0.4s ease 0.15s;
+    transform:scale(1.15) translateY(10px);
+    opacity:0;
+  }
+  .gift-box.opening .box-group rect{
+    animation:boxPulse 0.3s ease-in-out;
+  }
+  @keyframes boxPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+  }
+  .gift-box.opening .sparkle-group{
+    transition:transform 0.7s ease-out, opacity 0.7s ease-out;
+    transform:scale(2.6);
+    opacity:0;
+  }
+  .gift-box.opening .sparkle-group circle,
+  .gift-box.opening .sparkle-group path{
+    animation:sparkleSpin 0.7s ease-out forwards;
+  }
+  @keyframes sparkleSpin{
+    0%{transform:rotate(0deg) scale(1); opacity:1;}
+    100%{transform:rotate(180deg) scale(0.3); opacity:0;}
+  }
+
+  .gift-tap{
+    margin-top:30px;
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--blue-deep);
+    opacity:0.7;
+    animation:fadePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes fadePulse{
+    0%,100%{opacity:0.35;}
+    50%{opacity:0.85;}
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .container{
+    position:relative;z-index:2;
+    max-width:680px;margin:0 auto;
+    padding:50px 24px 100px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .container.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* Hero */
+  .hero{ padding:30px 0 10px; position:relative; }
+  .ribbon{
+    display:inline-block;
+    background:#fff;
+    color:var(--text-deep);
+    padding:8px 24px;
+    border-radius:30px;
+    font-size:13px;
+    letter-spacing:1px;
+    margin-bottom:20px;
+    border:2px dashed var(--blue);
+    font-weight:600;
+    transform:rotate(-2deg);
+  }
+  h1.title{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:58px;
+    color:var(--text-deep);
+    line-height:1.1;
+    margin-bottom:0px;
+  }
+  .name{
+    font-size:84px;
+    color:var(--pink-deep);
+    -webkit-text-stroke: 2px var(--text-deep);
+    position:relative;
+    display:inline-block;
+  }
+
+
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-10px) rotate(2deg);}
+  }
+
+  .subtitle{
+    font-size:17px;
+    color:var(--text);
+    margin-top:14px;
+    font-weight:500;
+    font-style:italic;
+    font-family:'Caveat',cursive;
+    font-size:24px;
+  }
+  .date-badge{
+    margin-top:24px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#fff;
+    padding:10px 26px;
+    border-radius:50px;
+    border:2px solid var(--blue);
+    font-size:14px;
+    color:var(--text-deep);
+    font-weight:600;
+    transform:rotate(1deg);
+  }
+
+  /* Cake doodle */
+  .cake-wrap{
+    margin:46px auto;
+    position:relative;
+    width:150px;
+  }
+  .cake-wrap svg{
+    width:100%;
+    display:block;
+    animation:wiggle 3s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{transform:rotate(-2deg);}
+    50%{transform:rotate(2deg);}
+  }
+
+  /* Card wrap with corner GIFs */
+  .card-wrap{
+    position:relative;
+    margin:36px 0;
+    /* Beri ruang untuk corner GIFs */
+    margin-left:0;
+    margin-right:0;
+  }
+  .corner-gif{
+    position:absolute;
+    z-index:3;
+    pointer-events:none;
+  }
+  .corner-gif img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .corner-tl{ top:-80px;  left:-80px;  width:180px; height:180px; }
+  .corner-tr{ top:-110px; right:-110px; width:240px; height:240px; }
+  .corner-bl{ bottom:-110px; left:-110px; width:240px; height:240px; }
+  .corner-br{ bottom:-80px; right:-80px; width:180px; height:180px; }
+
+  /* Card / message */
+  .card{
+    background:#fff;
+    background-image:      linear-gradient(transparent calc(1.9em - 1px), #bde0f7 calc(1.9em - 1px), #bde0f7 1.9em, transparent 1.9em);
+    background-size: 100% 1.9em;
+    border-radius:24px;
+    padding:36px 30px 36px 52px;
+    margin:0;
+    border:2px solid var(--blue);
+    position:relative;
+    text-align:left;
+    transform:rotate(-0.4deg);
+    line-height:1.9em;
+  }
+  /* red margin line */
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; left:38px;
+    width:2px; height:100%;
+    background:rgba(255,150,180,0.5);
+    border-radius:2px;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:14px; right:14px;
+    width:34px; height:34px;
+    background-image: radial-gradient(circle, var(--pink-deep) 40%, transparent 42%);
+    opacity:0.5;
+  }
+  .card h2{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:34px;
+    color:var(--text-deep);
+    margin-bottom:14px;
+    text-align:center;
+  }
+  .card p{
+    font-size:15.5px;
+    line-height:1.85;
+    color:var(--text);
+  }
+  .card p + p{margin-top:12px;}
+  .signature{
+    margin-top:20px;
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:28px;
+    color:var(--pink-deep);
+    text-align:right;
+  }
+
+  /* Wish cards grid */
+  .wishes{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin:36px 0;
+  }
+  .wish{
+    background:#fff;
+    border-radius:16px;
+    padding:18px 10px;
+    border:2px dashed var(--pink-deep);
+    transition:transform 0.25s ease;
+  }
+  .wish:nth-child(even){
+    border-color:var(--blue);
+    transform:rotate(1.5deg);
+  }
+  .wish:nth-child(odd){
+    transform:rotate(-1.5deg);
+  }
+  .wish:hover{
+    transform:scale(1.06) rotate(0deg);
+  }
+  .wish svg{ width:34px; height:34px; display:block; margin:0 auto 8px; }
+  .wish .label{font-size:12.5px;color:var(--text-deep);font-weight:600;}
+
+  @media (max-width:600px){
+    .container{
+      padding:36px 16px 80px;
+    }
+    h1.title{font-size:38px;}
+    .name{font-size:54px;}
+    .subtitle{font-size:20px;}
+    .gift-screen h2{font-size:26px;}
+    .gift-box{width:140px;height:140px;}
+
+    /* Corner GIFs — kecilkan dan sesuaikan posisi biar ga overflow */
+    .corner-tl{ top:-40px;  left:-30px;  width:100px; height:100px; }
+    .corner-tr{ top:-50px; right:-30px; width:120px; height:120px; }
+    .corner-bl{ bottom:-50px; left:-30px; width:120px; height:120px; }
+    .corner-br{ bottom:-40px; right:-30px; width:100px; height:100px; }
+
+    .card{padding:28px 16px 28px 36px; font-size:14px;}
+    .card h2{font-size:26px;}
+    .card::after{left:26px;}
+    .signature{font-size:22px;}
+
+    .wishes{grid-template-columns:repeat(3,1fr);gap:8px;}
+    .wish{padding:12px 4px;}
+    .wish svg{width:26px;height:26px;}
+    .wish .label{font-size:11px;}
+
+    .btn-img{width:160px;}
+    .date-badge{font-size:12px; padding:8px 16px;}
+    .ribbon{font-size:11px; padding:6px 16px;}
+  }
+
+  /* Footer */
+  .footer{
+    margin-top:46px;
+    font-size:13px;
+    color:var(--blue-deep);
+    font-family:'Caveat',cursive;
+    font-weight:600;
+    font-size:20px;
+  }
+
+  /* Image button */
+  .btn-img-wrap{
+    display:inline-block;
+    cursor:pointer;
+    margin-top:6px;
+    transition:transform 0.15s ease;
+    user-select:none;
+  }
+  .btn-img-wrap:hover{
+    transform:translateY(-3px) scale(1.05);
+  }
+  .btn-img-wrap:active{
+    transform:scale(0.93);
+  }
+  .btn-img{
+    display:block;
+    width:220px;
+    height:auto;
+    pointer-events:none;
+  }
+
+  .pop-item{
+    position:fixed;
+    pointer-events:none;
+    font-size:20px;
+    z-index:50;
+    animation:popFly 1.4s ease-out forwards;
+  }
+  @keyframes popFly{
+    0%{transform:translateY(0) scale(0.6); opacity:1;}
+    100%{transform:translateY(-160px) scale(1.3); opacity:0;}
+  }
+
+  @keyframes burstFly{
+    0%{transform:translate(-50%,-50%) scale(0.3); opacity:1;}
+    60%{transform:translate(calc(-50% + var(--dx)*0.8), calc(-50% + var(--dy)*0.8)) scale(1.2); opacity:1;}
+    100%{transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.6); opacity:0;}
+  }
+
+  .tap-heart{
+    position:fixed;
+    pointer-events:none;
+    z-index:60;
+    animation:tapPop 1s ease-out forwards;
+  }
+  @keyframes tapPop{
+    0%{transform:scale(0.3) translateY(0); opacity:1;}
+    40%{transform:scale(1.3) translateY(-10px); opacity:1;}
+    100%{transform:scale(0.9) translateY(-60px); opacity:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- 🖼️ BACKGROUND IMAGE — taruh file JPG/PNG di folder yang sama, ganti "background.jpg" dengan nama file kamu -->
+<div class="bg-image">
+  <img src="assets/images/awank.png" alt="" />
+</div>
+
+<div class="bg-deco" id="bgDeco"></div>
+
+  <!-- 🎵 TARUH FILE LAGU KAMU DI FOLDER YANG SAMA, GANTI "song.mp3" DENGAN NAMA FILE KAMU -->
+  <audio id="bgMusic" loop>
+    <source src="assets/audio/seasons.mp3" type="audio/mpeg">
+  </audio>
+<div class="gift-screen" id="giftScreen">
+  <h2>a little doodle gift floated your way~</h2>
+  <p>tied with a wobbly bow, made just for you. tap it open whenever you're ready, Lia 💙</p>
+  <div class="gift-box" id="giftBox" onclick="openGift()">
+    <svg viewBox="0 0 200 200" fill="none">
+      <g class="sparkle-group">
+        <path d="M30 30 L36 36 M170 30 L164 36 M30 170 L36 164 M170 170 L164 164" stroke="var(--pink-deep)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="20" cy="100" r="3" fill="var(--blue-deep)"/>
+        <circle cx="180" cy="100" r="3" fill="var(--pink-deep)"/>
+        <circle cx="100" cy="15" r="3" fill="var(--blue-deep)"/>
+        <path d="M55 50 C52 46 58 43 60 47 C63 43 68 46 65 50 C63 53 60 56 60 56 C60 56 57 53 55 50 Z" fill="var(--pink-deep)"/>
+        <path d="M135 50 C132 46 138 43 140 47 C143 43 148 46 145 50 C143 53 140 56 140 56 C140 56 137 53 135 50 Z" fill="var(--blue-deep)"/>
+        <path d="M60 150 C57 146 63 143 65 147 C68 143 73 146 70 150 C68 153 65 156 65 156 C65 156 62 153 60 150 Z" fill="var(--blue-deep)"/>
+        <path d="M140 150 C137 146 143 143 145 147 C148 143 153 146 150 150 C148 153 145 156 145 156 C145 156 142 153 140 150 Z" fill="var(--pink-deep)"/>
+        <circle cx="100" cy="185" r="3" fill="var(--pink-deep)"/>
+        <path d="M14 60 L20 66 M186 60 L180 66 M14 140 L20 134 M186 140 L180 134" stroke="var(--blue-deep)" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g class="box-group">
+        <rect x="40" y="95" width="120" height="80" rx="10" fill="#fff" stroke="var(--text-deep)" stroke-width="3"/>
+        <path d="M40 100 Q100 110 160 100" stroke="var(--text-deep)" stroke-width="2.5" fill="none"/>
+        <path d="M60 175 L65 100 M140 175 L135 100" stroke="var(--pink-deep)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M65 175 Q70 130 65 100" stroke="var(--pink-deep)" stroke-width="3" fill="none"/>
+        <path d="M135 175 Q130 130 135 100" stroke="var(--pink-deep)" stroke-width="3" fill="none"/>
+      </g>
+      <g class="lid-group">
+        <rect x="34" y="78" width="132" height="24" rx="8" fill="#fff" stroke="var(--text-deep)" stroke-width="3"/>
+        <path d="M100 78 C 70 40, 50 50, 60 70 C 70 90, 95 80, 100 78 Z" fill="var(--pink)" stroke="var(--text-deep)" stroke-width="3"/>
+        <path d="M100 78 C 130 40, 150 50, 140 70 C 130 90, 105 80, 100 78 Z" fill="var(--pink)" stroke="var(--text-deep)" stroke-width="3"/>
+        <circle cx="100" cy="78" r="7" fill="var(--blue)" stroke="var(--text-deep)" stroke-width="3"/>
+      </g>
+    </svg>
+  </div>
+  <div class="gift-tap">buxa donkkk</div>
+</div>
+
+<div class="container" id="mainContent">
+
+  <div class="hero">
+    <span class="ribbon">for someone truly spasial</span>
+    <h1 class="title">Happy Birthday</h1>
+    <h1 class="title name">Lia</h1>
+    <p class="subtitle">"selamat brithduy yahhh kamuwww yang paling asboon."</p>
+    <div class="date-badge">June 24th — your day to shine ✦</div>
+  </div>
+
+  <div class="cake-wrap">
+    <svg viewBox="0 0 200 180" fill="none">
+      <path d="M85 30 C 75 15, 95 10, 92 25 C 100 12, 115 20, 105 35" stroke="var(--pink-deep)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="100" cy="38" rx="6" ry="10" fill="var(--blue)" stroke="var(--text-deep)" stroke-width="2.5"/>
+      <rect x="40" y="60" width="120" height="40" rx="8" fill="#fff" stroke="var(--text-deep)" stroke-width="3.5"/>
+      <rect x="30" y="100" width="140" height="55" rx="10" fill="#fff" stroke="var(--text-deep)" stroke-width="3.5"/>
+      <path d="M45 75 Q55 65 65 75 T85 75 T105 75 T125 75 T145 75" stroke="var(--pink-deep)" stroke-width="2.5" fill="none"/>
+      <path d="M35 120 Q50 110 65 120 T95 120 T125 120 T155 120" stroke="var(--blue-deep)" stroke-width="2.5" fill="none"/>
+      <circle cx="60" cy="85" r="4" fill="var(--pink-deep)"/>
+      <circle cx="100" cy="85" r="4" fill="var(--blue-deep)"/>
+      <circle cx="140" cy="85" r="4" fill="var(--pink-deep)"/>
+    </svg>
+  </div>
+
+  <div class="card-wrap">
+    <!-- 🎀 GIF POJOK — ganti nama file sesuai milikmu, taruh di folder yang sama -->
+    <div class="corner-gif corner-tl"><img src="assets/gifs/kirtas.gif" alt="" /></div>
+    <div class="corner-gif corner-tr"><img src="assets/gifs/kanan.gif" alt="" /></div>
+
+    <div class="card">
+      <h2>To Lia, with all my heart</h2>
+      <p>Happy birthday, Lia! Today the sky feels a little softer, the clouds a little fluffier, anjay — like the whole world is celebrating that someone as sweet as you exists kiww</p>
+      <p>You're the kind of person who turns ordinary days into cozy little memories, who makes "just talking (asboon)" feel like a warm blanket on a rainy afternoon, and whose smile could probably make even the grumpiest cloud rain rainbows instead.</p>
+      <p>So here's to you: may this year bring you fluffy mornings, sweet treats, gentle breezes, people who deserve your kindness, and a love story soft enough to rival your favorite daydream. You're treasured more than you know, today and every day after.</p>
+      <div class="signature">— isfunk la u 🩵</div>
+    </div>
+
+    <div class="corner-gif corner-bl"><img src="assets/gifs/kiri.gif" alt="" /></div>
+    <div class="corner-gif corner-br"><img src="assets/gifs/kantas.gif" alt="" /></div>
+  </div>
+
+  <!-- 🖼️ TOMBOL GAMBAR — ganti "button.png" dengan nama file kamu -->
+  <div class="btn-img-wrap" onclick="popHearts(event)">
+    <img src="assets/gifs/buttoncinnamo.gif" alt="ngising" class="btn-img" />
+  </div>
+
+  <div class="footer">
+    dibuat pake apa aja yang pentink two loose
+  </div>
+
+</div>
+
+<script>
+  const bgDeco = document.getElementById('bgDeco');
+  const decoSVGs = [
+    '<svg viewBox="0 0 40 40" width="100%" height="100%"><path d="M10 22 C5 14 14 8 20 14 C26 8 35 14 30 22 C26 28 20 32 20 32 C20 32 14 28 10 22 Z" stroke="#ff9ec2" stroke-width="2.5" fill="none"/></svg>',
+    '<svg viewBox="0 0 40 40" width="100%" height="100%"><path d="M10 25 C6 18 14 14 18 18 C20 12 28 12 30 18 C34 14 38 22 32 27 C28 30 20 28 20 28 C20 28 14 30 10 25 Z" stroke="#5ba8e0" stroke-width="2.5" fill="none"/></svg>',
+    '<svg viewBox="0 0 40 40" width="100%" height="100%"><path d="M20 6 L24 17 L36 17 L26 24 L30 35 L20 28 L10 35 L14 24 L4 17 L16 17 Z" stroke="#5ba8e0" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>',
+    '<svg viewBox="0 0 40 40" width="100%" height="100%"><circle cx="20" cy="20" r="12" stroke="#ff9ec2" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="6" stroke="#ff9ec2" stroke-width="1.5" fill="none"/></svg>'
+  ];
+  for(let i=0;i<18;i++){
+    const h = document.createElement('div');
+    h.className='deco-item';
+    h.innerHTML = decoSVGs[Math.floor(Math.random()*decoSVGs.length)];
+    const size = 18+Math.random()*22;
+    h.style.width = size+'px';
+    h.style.height = size+'px';
+    h.style.left = Math.random()*100+'%';
+    h.style.animationDuration = (9+Math.random()*10)+'s';
+    h.style.animationDelay = (Math.random()*10)+'s';
+    bgDeco.appendChild(h);
+  }
+
+  let opened = false;
+  function openGift(){
+    if(opened) return;
+    opened = true;
+    const box = document.getElementById('giftBox');
+    const screen = document.getElementById('giftScreen');
+    const main = document.getElementById('mainContent');
+
+    box.classList.add('shaking');
+
+    setTimeout(()=>{
+      box.classList.remove('shaking');
+      box.classList.add('opening');
+
+      // play music
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.4;
+      music.play().catch(()=>{});
+
+      // burst of hearts/sparkles from the gift's position
+      const rect = box.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      const decos = [
+        '<svg viewBox="0 0 40 40" width="24" height="24"><path d="M10 22 C5 14 14 8 20 14 C26 8 35 14 30 22 C26 28 20 32 20 32 C20 32 14 28 10 22 Z" fill="#ff9ec2"/></svg>',
+        '<svg viewBox="0 0 40 40" width="24" height="24"><path d="M10 25 C6 18 14 14 18 18 C20 12 28 12 30 18 C34 14 38 22 32 27 C28 30 20 28 20 28 C20 28 14 30 10 25 Z" fill="#bfe5ff"/></svg>',
+        '<svg viewBox="0 0 40 40" width="22" height="22"><path d="M20 6 L24 17 L36 17 L26 24 L30 35 L20 28 L10 35 L14 24 L4 17 L16 17 Z" fill="#8ecbff"/></svg>'
+      ];
+      for(let i=0;i<18;i++){
+        const p = document.createElement('div');
+        p.className='pop-item';
+        p.innerHTML = decos[Math.floor(Math.random()*decos.length)];
+        const angle = (Math.PI*2*i)/18;
+        const dist = 80 + Math.random()*60;
+        p.style.left = cx + 'px';
+        p.style.top = cy + 'px';
+        p.style.setProperty('--dx', Math.cos(angle)*dist + 'px');
+        p.style.setProperty('--dy', Math.sin(angle)*dist + 'px');
+        p.style.animation = 'burstFly 0.9s ease-out forwards';
+        document.body.appendChild(p);
+        setTimeout(()=>p.remove(),900);
+      }
+    }, 500);
+
+    setTimeout(()=>{
+      screen.classList.add('hidden');
+      main.classList.add('show');
+    }, 1200);
+  }
+
+  function popHearts(e){
+    const decos = [
+      '<svg viewBox="0 0 40 40" width="22" height="22"><path d="M10 22 C5 14 14 8 20 14 C26 8 35 14 30 22 C26 28 20 32 20 32 C20 32 14 28 10 22 Z" fill="#ff9ec2"/></svg>',
+      '<svg viewBox="0 0 40 40" width="22" height="22"><path d="M10 25 C6 18 14 14 18 18 C20 12 28 12 30 18 C34 14 38 22 32 27 C28 30 20 28 20 28 C20 28 14 30 10 25 Z" fill="#bfe5ff"/></svg>',
+      '<svg viewBox="0 0 40 40" width="20" height="20"><path d="M20 6 L24 17 L36 17 L26 24 L30 35 L20 28 L10 35 L14 24 L4 17 L16 17 Z" fill="#8ecbff"/></svg>'
+    ];
+    for(let i=0;i<14;i++){
+      const p = document.createElement('div');
+      p.className='pop-item';
+      p.innerHTML = decos[Math.floor(Math.random()*decos.length)];
+      p.style.left = (e.clientX + (Math.random()*120-60)) + 'px';
+      p.style.top = (e.clientY) + 'px';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1400);
+    }
+  }
+
+  // Tap/click anywhere on screen spawns a little heart
+  document.addEventListener('click', function(e){
+    if(e.target.closest('.btn-love') || e.target.closest('.gift-box')) return;
+    const h = document.createElement('div');
+    h.className = 'tap-heart';
+    h.innerHTML = '<svg viewBox="0 0 40 40" width="26" height="26"><path d="M10 22 C5 14 14 8 20 14 C26 8 35 14 30 22 C26 28 20 32 20 32 C20 32 14 28 10 22 Z" fill="#ff9ec2"/></svg>';
+    h.style.left = (e.clientX - 13) + 'px';
+    h.style.top = (e.clientY - 13) + 'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 1000);
+  });
+
+</script>
+
+</body>
+</html>
